@@ -13,8 +13,7 @@ namespace DentalClinicPrototype.Models
         public string FullName { get; set; }
         
         public string ImageUrl { get; set; }
-        public string Specialization { get; set; }
-        //public ICollection<Nurse>? Nurses { get; set; }
+        
         public ICollection<MedicalRecord>? MedicalRecords { get; set; }
 
 

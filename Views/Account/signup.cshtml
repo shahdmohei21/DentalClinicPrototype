@@ -1,0 +1,330 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup Hope Clinic</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts2/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main CSS -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/css2/style.css" />
+    
+    <style>
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            margin: auto;
+        }
+
+        .form-container input {
+            margin-bottom: 10px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    
+    
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  display: none; /* Hidden until error happens */
+  
+}
+
+
+.custom-file-upload {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.custom-file-upload input[type="file"] {
+  opacity: 0;
+  width: 120px;
+  height: 40px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.custom-file-upload::before {
+  content: "Choose Image";
+  display: inline-block;
+  background: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.custom-file-upload:hover::before {
+  background: #43a047;
+}
+
+#file-name {
+  font-size: 14px;
+  color: #555;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form asp-action="signup" asp-controller="Account" method="post" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                          <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                          <input type="text" name="name" id="name" placeholder="Your Name" />
+                          <p id="name-error" class="error-message"></p>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label for="email"><i class="zmdi zmdi-email"></i></label>
+                          <input type="email" name="email" id="email" placeholder="Your Email" />
+                          <p id="email-error" class="error-message"></p>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                          <input type="password" name="pass" id="pass" placeholder="Password" />
+                          <p id="pass-error" class="error-message"></p>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                          <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
+                          <p id="re_pass-error" class="error-message"></p>
+                        </div>
+                      
+                        
+                        <div class="form-group">
+                            <label for="photo" class="upload-label">Upload Profile Image</label>
+                            
+                            <div class="custom-file-upload">
+                              <input type="file" id="photo" name="photo" accept="image/*" onchange="showFileName()" />
+                              <span id="file-name">No file chosen</span>
+                            </div>
+                          
+                            <p id="photo-error" class="error-message"></p>
+                          </div>
+
+
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                        </div>
+
+                      </form>
+                      
+                    
+                      
+                </div>
+                <div class="signup-image">
+                    <figure><img src="~/images/hope clinic icon.png" alt="sing up image"></figure>
+                    <a asp-controller="Account" asp-action="signin" class="signup-image-link">I am already member</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+            
+    <div id="success-message" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  font-size: 20px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 9999;
+">
+</div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('register-form');
+        
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+        
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('pass').value.trim();
+                const repeatPassword = document.getElementById('re_pass').value.trim();
+                const photo = document.getElementById('photo').files[0];
+        
+                let isValid = true;
+        
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(p => {
+                    p.style.display = 'none';
+                    p.innerText = '';
+                });
+        
+                // Validate Name
+                if (!name) {
+                    document.getElementById('name-error').innerText = "Name is required.";
+                    document.getElementById('name-error').style.display = 'block';
+                    isValid = false;
+                }
+        
+              
+                // Validate Password
+                if (!password) {
+                    document.getElementById('pass-error').innerText = "Password is required.";
+                    document.getElementById('pass-error').style.display = 'block';
+                    isValid = false;
+                } else if (password.length < 6) {
+                    document.getElementById('pass-error').innerText = "Password must be at least 6 characters.";
+                    document.getElementById('pass-error').style.display = 'block';
+                    isValid = false;
+                } else if (!/^[A-Za-z0-9]+$/.test(password)) {
+                    document.getElementById('pass-error').innerText = "Password can only contain letters and numbers.";
+                    document.getElementById('pass-error').style.display = 'block';
+                    isValid = false;
+                }
+        
+                // Validate Repeat Password
+                if (!repeatPassword) {
+                    document.getElementById('re_pass-error').innerText = "Please repeat your password.";
+                    document.getElementById('re_pass-error').style.display = 'block';
+                    isValid = false;
+                } else if (password !== repeatPassword) {
+                    document.getElementById('re_pass-error').innerText = "Passwords do not match.";
+                    document.getElementById('re_pass-error').style.display = 'block';
+                    isValid = false;
+                }
+        
+                
+                if (!photo) {
+                    document.getElementById('photo-error').innerText = "Profile photo is required.";
+                    document.getElementById('photo-error').style.display = 'block';
+                    isValid = false;
+                } else if (!photo.type.startsWith('image/')) {
+                    document.getElementById('photo-error').innerText = "Only image files are allowed.";
+                    document.getElementById('photo-error').style.display = 'block';
+                    isValid = false;
+                }
+        
+                
+                if (isValid) {
+            
+            const successMessage = document.getElementById('success-message');
+            successMessage.style.display = 'block';
+            successMessage.style.opacity = '1';
+            successMessage.innerText = "Registration successful! please wait...";
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                successMessage.style.opacity = '0';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                    window.location.href = "signin.cshtml"; // 
+                }, 500);
+            }, 2000);
+        }
+            });
+        });
+        </script>
+        <script>
+            function showFileName() {
+              const fileInput = document.getElementById('photo');
+              const fileNameSpan = document.getElementById('file-name');
+            
+              if (fileInput.files.length > 0) {
+            fileNameSpan.textContent = fileInput.files[0].name; // 👈 Show chosen file name
+              } else {
+                fileNameSpan.textContent = 'No file chosen';
+              }
+            }
+            </script>
+            
+        
+        
+
+<!-- JS -->
+<script src="vendor2/jquery/jquery.min.js"></script>
+<script src="js2/main.js"></script>
+
+
+</body>
+</html>
