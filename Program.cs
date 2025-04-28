@@ -12,7 +12,7 @@ namespace DentalClinicPrototype
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<context>(options =>
+            builder.Services.AddDbContext < Context>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -26,7 +26,7 @@ namespace DentalClinicPrototype
                 options.Password.RequiredLength = 1;
                 options.Lockout.MaxFailedAccessAttempts = 10;
             })
-.AddEntityFrameworkStores<context>()
+.AddEntityFrameworkStores<Context>()
 .AddDefaultTokenProviders();
             var app = builder.Build();
 

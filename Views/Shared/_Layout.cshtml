@@ -1,45 +1,108 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DentalClinicPrototype</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DentalClinicPrototype.styles.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewBag.Title - Hope Clinic</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet" />
+
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" />
+    <link rel="stylesheet" href="~/css/aos.css" />
+    <link rel="stylesheet" href="~/css/ionicons.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
+    <link rel="stylesheet" href="~/css/flaticon.css" />
+    <link rel="stylesheet" href="~/css/icomoon.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+
+   
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DentalClinicPrototype</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Hope<span>clinic</span></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="oi oi-menu"></span> Menu
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+                <div class="collapse navbar-collapse" id="ftco-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Services" ? "active" : "")">
+                            <a class="nav-link" asp-controller="Home" asp-action="services">Services</a>
+                        </li>
+                        <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Doctors" ? "active" : "")">
+                            <a class="nav-link" asp-controller="Home" asp-action="doctors">Doctors</a>
+                        </li>
+                        <li class="nav-item cta">
+                            <a class="nav-link" href="#quote">
+                                <span>Make an Appointment</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                                <a class="btn btn-primary px-4 py-3" asp-controller="Account" asp-action="Login">Login</a>
+                            </p>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+
     </header>
-    <div class="container">
+
+    
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
         <div class="container">
-            &copy; 2025 - DentalClinicPrototype - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="row mb-5">
+                <div class="col-md-3">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Hope Clinic</h2>
+                        <p>follow us in social media</p>
+                    </div>
+                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
+                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <ul class="list-unstyled">
+
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">clinic location</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">Assiut governorate, Feryal st., bulding num 211.</span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">19723</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">hopeclinic@gmail.com</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

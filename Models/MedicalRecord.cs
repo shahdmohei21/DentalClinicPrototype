@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DentalClinicPrototype.Models
+﻿namespace DentalClinicPrototype.Models
 {
     public class MedicalRecord
     {
         public int Id { get; set; }
-        [ForeignKey("Doctor")]
+
         public int DoctorId { get; set; }
-        [ForeignKey("Patient")]
+        public Doctor Doctor { get; set; }
+
         public int PatientId { get; set; }
+        public Patient Patient { get; set; }
+
         public string Diagnosis { get; set; }
-        public Doctor? Doctor { get; set; }
-        public Patient? Patient { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }

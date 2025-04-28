@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using DentalClinicPrototype.Models;
-using Microsoft.AspNetCore.Mvc;
 
-namespace DentalClinicPrototype.Controllers
+
+namespace WebApplication2.Controllers
 {
     public class HomeController : Controller
     {
@@ -18,7 +19,12 @@ namespace DentalClinicPrototype.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult services()
+        {
+            return View();
+        }
+
+        public IActionResult doctors()
         {
             return View();
         }
