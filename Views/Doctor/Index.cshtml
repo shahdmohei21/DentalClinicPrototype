@@ -1,0 +1,89 @@
+﻿@model IEnumerable<DentalClinicPrototype.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Manage Doctors";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">All Doctors</h6>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus-circle mr-2"></i>Add New Doctor
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="doctorsTable" width="100%" cellspacing="0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Experience</th>
+                        <th>Appointment Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(item.User.ImageUrl))
+                                {
+                                    <img src="~/images/users/@item.User.ImageUrl" alt="@item.User.FullName" class="rounded-circle" width="50" height="50" style="object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <img src="~/images/default-doctor.png" alt="Default" class="rounded-circle" width="50" height="50">
+                                }
+                            </td>
+                            <td>@item.User.FullName</td>
+                            <td>@item.Specialization</td>
+                            <td>@item.Experience years</td>
+                            <td>$@item.appointmentPrice</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="text-center py-4">
+                <p class="text-muted">No doctors found. Click "Add New Doctor" to create one.</p>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#doctorsTable').DataTable({
+                "order": [[1, "asc"]], // Sort by name column
+                "language": {
+                    "search": "Search doctors:",
+                    "lengthMenu": "Show _MENU_ doctors per page",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ doctors",
+                    "infoEmpty": "No doctors found",
+                    "infoFiltered": "(filtered from _MAX_ total doctors)"
+                }
+            });
+        });
+    </script>
+}

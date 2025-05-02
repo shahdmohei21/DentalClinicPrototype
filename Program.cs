@@ -26,8 +26,8 @@ namespace DentalClinicPrototype
                 options.Password.RequiredLength = 1;
                 options.Lockout.MaxFailedAccessAttempts = 10;
             })
-.AddEntityFrameworkStores<Context>()
-.AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<Context>()
+                .AddDefaultTokenProviders();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -72,9 +72,10 @@ namespace DentalClinicPrototype
                     adminUser = new User
                     {
                         UserName = "Shahd",
+                        FullName = "Shahd Mohei",
                         Email = adminEmail,
                         PhoneNumber = "01009412941",
-                       
+                        ImageUrl = "img.jpg",
                     };
 
                     var result = await userManager.CreateAsync(adminUser, "admin");//pasward

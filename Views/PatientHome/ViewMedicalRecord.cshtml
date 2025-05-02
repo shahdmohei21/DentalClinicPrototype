@@ -1,0 +1,206 @@
+﻿@model List<DentalClinicPrototype.Models.MedicalRecord>
+@{
+    ViewData["Title"] = "My Medical Records";
+}
+
+<!-- Hidden patient name for JS use -->
+<span id="patientName" style="display:none;">
+    @Model.FirstOrDefault()?.Patient?.User?.FullName
+</span>
+
+<div class="doctor-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5><i class="fas fa-file-medical mr-2"></i>My Medical Records</h5>
+        <div>
+            <div class="input-group">
+                <input type="text" id="searchRecords" class="form-control form-control-sm" placeholder="Search records...">
+                <div class="input-group-append">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover" id="medicalRecordsTable">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Doctor</th>
+                            <th>Diagnosis</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in Model.OrderByDescending(r => r.CreatedAt))
+                        {
+                            <tr data-record-id="@record.Id">
+                                <td>
+                                    <div>@record.CreatedAt.ToString("MMM dd, yyyy")</div>
+                                    <small class="text-muted">@record.CreatedAt.ToString("hh:mm tt")</small>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @if (!string.IsNullOrEmpty(record.Doctor?.User?.ImageUrl))
+                                        {
+                                            <img src="~/images/users/@record.Doctor.User.ImageUrl" alt="Doctor" class="rounded-circle mr-2" style="width: 30px; height: 30px; object-fit: cover;">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/default-user.png" alt="Doctor" class="rounded-circle mr-2" style="width: 30px; height: 30px; object-fit: cover;">
+                                        }
+                                        <div>
+                                            <div>Dr. @record.Doctor?.User?.FullName</div>
+                                            <small class="text-muted">@record.Doctor?.Specialization</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td title="@record.Diagnosis">
+                                    @{
+                                        string diagnosisPreview = string.IsNullOrEmpty(record.Diagnosis)
+                                        ? "No diagnosis information"
+                                        : (record.Diagnosis.Length > 50
+                                        ? record.Diagnosis.Substring(0, 50) + "..."
+                                        : record.Diagnosis);
+                                    }
+                                    <div class="text-truncate" style="max-width: 250px;">
+                                        @diagnosisPreview
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="printRecord(@record.Id)">
+                                        <i class="fas fa-print mr-1"></i> Print
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <img src="~/images/no-records.svg" alt="No Records" style="width: 120px; height: 120px; opacity: 0.5;">
+                <h5 class="mt-4">No Medical Records Found</h5>
+                <p class="text-muted">You don't have any medical records in our system yet.</p>
+                <a asp-controller="PatientHome" asp-action="Index" class="btn btn-primary mt-2">
+                    <i class="fas fa-home mr-1"></i> Go to Dashboard
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Record Print Modal -->
+<div class="modal fade" id="printRecordModal" tabindex="-1" role="dialog" aria-labelledby="printRecordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="printRecordModalLabel">Print Medical Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="printRecordContent">
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading record details...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="printButton">
+                    <i class="fas fa-print mr-1"></i> Print
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Search
+            $("#searchRecords").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#medicalRecordsTable tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            // Print button in modal
+            $("#printButton").click(function () {
+                var printContents = document.getElementById("printRecordContent").innerHTML;
+                var originalContents = document.body.innerHTML;
+
+                document.body.innerHTML = `
+                    <div class="container mt-4">
+                        <div class="text-center mb-4">
+                            <h3>Dental Clinic</h3>
+                            <p>Medical Record</p>
+                        </div>
+                        ${printContents}
+                    </div>`;
+
+                window.print();
+                document.body.innerHTML = originalContents;
+                location.reload();
+            });
+        });
+
+        function printRecord(recordId) {
+            $('#printRecordModal').modal('show');
+
+            setTimeout(function () {
+                var recordRow = $(`#medicalRecordsTable tbody tr[data-record-id='${recordId}']`);
+
+                if (!recordRow.length) {
+                    $("#printRecordContent").html("<p class='text-danger'>Record not found.</p>");
+                    return;
+                }
+
+                var date = recordRow.find("td:eq(0)").text().trim();
+                var doctorName = recordRow.find("td:eq(1)").text().trim();
+                var diagnosis = recordRow.find("td:eq(2)").attr("title") || "No diagnosis information provided.";
+                var patientName = $('#patientName').text().trim() || 'Current Patient';
+
+                $("#printRecordContent").html(`
+                    <div class="print-header mb-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>Medical Record #${recordId}</h4>
+                                <p class="text-muted">${date}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5>Doctor Information</h5>
+                            <p>${doctorName}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Patient Information</h5>
+                            <p>${patientName}</p>
+                        </div>
+                    </div>
+
+                    <div class="diagnosis-section mb-4">
+                        <h5>Diagnosis</h5>
+                        <p>${diagnosis}</p>
+                    </div>
+
+                    <div class="footer-note mt-5">
+                        <p class="text-muted"><small>This is an official medical record from Dental Clinic. For any inquiries, please contact our office.</small></p>
+                    </div>
+                `);
+            }, 500);
+        }
+    </script>
+}

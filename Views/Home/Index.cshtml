@@ -1,587 +1,905 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hope Clinic</title>
+﻿@{
+    ViewData["Title"] = "Hope Clinic - Your Dental Health, Our Priority";
+}
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet">
-
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/aos.css">
-    <link rel="stylesheet" href="css/ionicons.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="css/jquery.timepicker.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-    <section class="home-slider owl-carousel">
-        <div class="slider-item" style="background-image: url('images/%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%A7%D8%B3%D9%86%D8%A7%D9%86.webp');">
-            <div class="overlay"></div>
-            <div>
-                <div class="row slider-text align-items-center" data-scrollax-parent="true">
-                    <div class="col-md-6 col-sm-12 ftco-animate" data-scrollax="properties: { translateY: '70%' }">
-                        <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                            Here, we provide the necessary care for permanent teeth.
-                        </h1>
-                        <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                            A dental clinic provides professional oral health services, including preventive care, diagnostic assessments, treatments, and cosmetic dentistry.
-                        </p>
-                        <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                            <a href="signin.cshtml" class="btn btn-primary px-4 py-3">Show Reports</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+<!-- Hero Section -->
+<section class="hero" id="heroid">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Excellence in Dental Care</h1>
+        <p>Welcome to Hope Clinic, where your smile is our top priority. With personalized dental care and a commitment to excellence, we're here to support you on your journey to optimal oral health.</p>
+        <div class="hero-buttons">
+            <a asp-controller="PatientHome" asp-action="AllDoctors" class="hero-btn primary-btn">See Doctors</a>
+            <a href="#servicesid" class="hero-btn secondary-btn">Our Services</a>
         </div>
-
-        
-    </section>
-
-    <!-- Intro Section with Emergency, Hours, and Appointment Form -->
-    <section class="ftco-intro">
-        <div>
-            <div class="row no-gutters">
-                <!-- Emergency Cases -->
-                <div class="col-md-3 color-1 p-4">
-                    <h3 class="mb-4">Emergency Cases</h3>
-                    <span class="phone-number">19723</span>
-                </div>
-
-                <!-- Opening Hours -->
-                <div class="col-md-6 color-2 p-4">
-                    <h3 class="mb-4">Opening Hours</h3>
-                    <p class="openinghours d-flex">
-                        <span>Monday - Friday</span>
-                        <span>8:00 - 19:00</span>
-                    </p>
-                    <p class="openinghours d-flex">
-                        <span>Saturday</span>
-                        <span>10:00 - 17:00</span>
-                    </p>
-                    <p class="openinghours d-flex">
-                        <span>Sunday</span>
-                        <span>10:00 - 16:00</span>
-                    </p>
-                </div>
-
-                <!-- Appointment Form (You can add the actual form content here if needed) -->
-
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section ftco-services">
-        <div>
-            <div class="row justify-content-center mb-5 pb-5">
-                <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2 class="mb-2">Our Services</h2>
-                    <p></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon d-flex justify-content-center align-items-center">
-                            <span class="flaticon-tooth-1"></span>
-                        </div>
-                        <div class="media-body p-2 mt-3">
-                            <h3 class="heading">Teeth Whitening</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon d-flex justify-content-center align-items-center">
-                            <span class="flaticon-dental-care"></span>
-                        </div>
-                        <div class="media-body p-2 mt-3">
-                            <h3 class="heading">Teeth Cleaning</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon d-flex justify-content-center align-items-center">
-                            <span class="flaticon-tooth-with-braces"></span>
-                        </div>
-                        <div class="media-body p-2 mt-3">
-                            <h3 class="heading">Quality Brackets</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 d-flex align-self-stretch ftco-animate">
-                    <div class="media block-6 services d-block text-center">
-                        <div class="icon d-flex justify-content-center align-items-center">
-                            <span class="flaticon-anesthesia"></span>
-                        </div>
-                        <div class="media-body p-2 mt-3">
-                            <h3 class="heading">Modern Anesthetic</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mt-5">
-            <div class="row d-flex no-gutters">
-                <div class="col-md-6 img" style="background-image: url('images/about-2.jpg');"></div>
-                <div class="col-md-6 d-flex">
-                    <div class="about-wrap">
-                        <div class="heading-section heading-section-white mb-5 ftco-animate">
-                            <h2 class="mb-2">Why Choose Us?</h2>
-                        </div>
-                        <div class="list-services d-flex ftco-animate">
-                            <div class="icon d-flex justify-content-center align-items-center">
-                                <span class="icon-check2"></span>
-                            </div>
-                            <div class="text">
-                                <h3>Experienced Dentists</h3>
-                            </div>
-                        </div>
-                        <div class="list-services d-flex ftco-animate">
-                            <div class="icon d-flex justify-content-center align-items-center">
-                                <span class="icon-check2"></span>
-                            </div>
-                            <div class="text">
-                                <h3>High Technology Facilities</h3>
-                            </div>
-                        </div>
-                        <div class="list-services d-flex ftco-animate">
-                            <div class="icon d-flex justify-content-center align-items-center">
-                                <span class="icon-check2"></span>
-                            </div>
-                            <div class="text">
-                                <h3>Comfortable Clinics</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section">
-        <div>
-            <div class="row justify-content-center mb-5 pb-5">
-                <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2 class="mb-3">Meet Our Experienced Dentists</h2>
-                    <p>We introduce our expert doctors to help you achieve a better smile.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
-                    <div class="staff">
-                        <div class="img mb-4" style="background-image: url('images/person_5.jpg');"></div>
-                        <div class="info text-center">
-                            <h3><a href="teacher-single.html">Mohammed Ali</a></h3>
-                            <span class="position">Orthodontics</span>
-                            <div class="text">
-                                <p>Bachelor of Dental Surgery, Master's in Orthodontics</p>
-                                <ul class="ftco-social">
-                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
-                    <div class="staff">
-                        <div class="img mb-4" style="background-image: url('images/person_2.jpg');"></div>
-                        <div class="info text-center">
-                            <h3><a href="teacher-single.html">Khalid Al-Mutairi</a></h3>
-                            <span class="position">Oral and Maxillofacial Surgery</span>
-                            <div class="text">
-                                <p>Master's in Oral Surgery, Alexandria University</p>
-                                <ul class="ftco-social">
-                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
-                    <div class="staff">
-                        <div class="img mb-4" style="background-image: url('images/person_8.jpg');"></div>
-                        <div class="info text-center">
-                            <h3><a href="teacher-single.html">Ahmed Mahmoud</a></h3>
-                            <span class="position">General Dentistry</span>
-                            <div class="text">
-                                <p>Bachelor of Dental Surgery, Cairo University</p>
-                                <ul class="ftco-social">
-                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 d-flex mb-sm-4 ftco-animate">
-                    <div class="staff">
-                        <div class="img mb-4" style="background-image: url('images/person_3.jpg');"></div>
-                        <div class="info text-center">
-                            <h3><a href="teacher-single.html">Jassim Abdullah</a></h3>
-                            <span class="position">Cosmetic Dentistry</span>
-                            <div class="text">
-                                <p>Bachelor of Dental Surgery, Diploma in Cosmetic Dentistry</p>
-                                <ul class="ftco-social">
-                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-google-plus"></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5 justify-content-center">
-                <div class="col-md-8 ftco-animate"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
-        <div>
-            <div class="row d-flex align-items-center">
-                <div class="col-md-3 aside-stretch py-5">
-                    <div class="heading-section heading-section-white ftco-animate pr-md-4">
-                        <h2 class="mb-3">Achievements</h2>
-                        <p>Here are some statistics that are thanks to you.</p>
-                    </div>
-                </div>
-                <div class="col-md-9 py-5 pl-md-5">
-                    <div class="row">
-                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div class="block-18">
-                                <div class="text">
-                                    <strong class="number" data-number="14">0</strong>
-                                    <span>Years of Experience</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div class="block-18">
-                                <div class="text">
-                                    <strong class="number" data-number="4500">0</strong>
-                                    <span>Qualified Dentists</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div class="block-18">
-                                <div class="text">
-                                    <strong class="number" data-number="4200">0</strong>
-                                    <span>Happy Smiling Customers</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
-                            <div class="block-18">
-                                <div class="text">
-                                    <strong class="number" data-number="320">0</strong>
-                                    <span>Patients Per Year</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section">
-        <div>
-            <div class="row justify-content-center mb-5 pb-5">
-                <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2 class="mb-3">Our Best Pricing</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Basic</h3>
-                            <p><span class="price">$24.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Diagnostic Services</li>
-                            <li>Professional Consultation</li>
-                            <li>Teeth Whitening</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Standard</h3>
-                            <p><span class="price">$34.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Diagnostic Services</li>
-                            <li>Professional Consultation</li>
-                            <li>Tooth Implants</li>
-                            <li>Surgical Extractions</li>
-                            <li>Teeth Whitening</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry active pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Premium</h3>
-                            <p><span class="price">$54.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Diagnostic Services</li>
-                            <li>Professional Consultation</li>
-                            <li>Tooth Implants</li>
-                            <li>Surgical Extractions</li>
-                            <li>Teeth Whitening</li>
-                            <li>Advanced Orthodontics</li>
-                            <li>Veneers</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 ftco-animate">
-                    <div class="pricing-entry pb-5 text-center">
-                        <div>
-                            <h3 class="mb-4">Platinum</h3>
-                            <p><span class="price">$89.50</span> <span class="per">/ session</span></p>
-                        </div>
-                        <ul>
-                            <li>Diagnostic Services</li>
-                            <li>Professional Consultation</li>
-                            <li>Tooth Implants</li>
-                            <li>Surgical Extractions</li>
-                            <li>Teeth Whitening</li>
-                            <li>Full Mouth Reconstruction</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section testimony-section bg-light">
-        <div>
-            <div class="row justify-content-center mb-5 pb-3">
-                <div class="col-md-7 text-center heading-section ftco-animate">
-                    <h2 class="mb-2">Testimonies and Ratings</h2>
-                    <span class="subheading">Our Happy Customers Say</span>
-                </div>
-            </div>
-            <div class="row justify-content-center ftco-animate">
-                <div class="col-md-8">
-                    <div class="carousel-testimony owl-carousel ftco-owl">
-                        <div class="item">
-                            <div class="testimony-wrap p-4 pb-5">
-                                <div class="user-img mb-5" style="background-image: ;">
-                                    <span class="quote d-flex align-items-center justify-content-center">
-                                        <i class="icon-quote-left"></i>
-                                    </span>
-                                </div>
-                                <div class="text text-center">
-                                    <p class="mb-5">Excellent service! The doctors are highly professional and were very kind to everyone. I felt comfortable throughout the treatment, and I was very happy with the results of my teeth whitening. I highly recommend this clinic.</p>
-                                    <p class="name">Fatma Al-Muhannidi</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-wrap p-4 pb-5">
-                                <div class="user-img mb-5" style="background-image: ;">
-                                    <span class="quote d-flex align-items-center justify-content-center">
-                                        <i class="icon-quote-left"></i>
-                                    </span>
-                                </div>
-                                <div class="text text-center">
-                                    <p class="mb-5">I went for a dental implant procedure, and the experience was amazing. The medical staff was very comforting and explained everything about the procedure before it began. I'm happy with the result and thank them for the excellent care.</p>
-                                    <p class="name">Kholoud Ali</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-wrap p-4 pb-5">
-                                <div class="user-img mb-5" style="background-image;">
-                                    <span class="quote d-flex align-items-center justify-content-center">
-                                        <i class="icon-quote-left"></i>
-                                    </span>
-                                </div>
-                                <div class="text text-center">
-                                    <p class="mb-5">The customer service was not good. I had to wait a long time to get an appointment, and when I arrived at the clinic, there were some issues with the doctor’s schedule. The treatment itself was fine, but the appointment service needs improvement.</p>
-                                    <p class="name">Farouk Mansour</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-wrap p-4 pb-5">
-                                <div class="user-img mb-5" style="background-image: ;">
-                                    <span class="quote d-flex align-items-center justify-content-center">
-                                        <i class="icon-quote-left"></i>
-                                    </span>
-                                </div>
-                                <div class="text text-center">
-                                    <p class="mb-5">The clinic is very nice and modern, and the medical staff was knowledgeable. I had a dental cleaning, and I was amazed by the precision of the work and attention to detail. I will definitely be coming back.</p>
-                                    <p class="name">John Nolan</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="testimony-wrap p-4 pb-5">
-                                <div class="user-img mb-5" style="background-image;">
-                                    <span class="quote d-flex align-items-center justify-content-center">
-                                        <i class="icon-quote-left"></i>
-                                    </span>
-                                </div>
-                                <div class="text text-center">
-                                    <p class="mb-5">I didn’t have a good experience here. They treated me quickly, but I didn’t feel like the doctor paid attention to all the details. Also, the prices were high for the service I received. I'm not sure if I’ll return.</p>
-                                    <p class="name">Abbas Salah</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="quote" class="ftco-quote">
-        <div>
-            <div class="row">
-                <div class="col-md-6 pr-md-5 aside-stretch py-5 choose">
-                    <div class="heading-section heading-section-white mb-5 ftco-animate">
-                        <h2 class="mb-2">Get a Free Consultation?</h2>
-                    </div>
-                    <div class="ftco-animate">
-                        <p>After all these pros, what are you waiting for?</p>
-                    </div>
-                </div>
-                <div class="col-md-6 py-5 pl-md-5">
-                    <div class="heading-section mb-5 ftco-animate">
-                        <h2 class="mb-2"></h2>
-                    </div>
-                    <form action="#" method="post" class="ftco-animate">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Full Name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="Email">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Phone">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Website">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea class="form-control" cols="30" rows="7" placeholder="Message"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <a href="signin.html" class="btn btn-primary py-3 px-5">Submit</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div id="map"></div>
-
-    <!-- Loader -->
-    <div id="ftco-loader" class="show fullscreen">
-        <svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"></circle>
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"></circle>
-        </svg>
     </div>
+</section>
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Why Choose Hope Clinic?</h2>
+            <p>We're committed to providing exceptional dental care with a patient-centered approach</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-tooth"></i></div>
+                <h3>Expert Dentists</h3>
+                <p>Our team of highly qualified dental professionals is committed to providing you with the highest standard of dental care using the latest techniques.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
+                <h3>Easy Scheduling</h3>
+                <p>Book appointments instantly, 24/7 at your convenience. Our online booking system makes scheduling your dental visits quick and hassle-free.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-smile"></i></div>
+                <h3>Comfortable Experience</h3>
+                <p>We prioritize your comfort with a relaxing environment, gentle care, and options for dental anxiety management to ensure a positive experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalRequest" tabindex="-1" role="dialog" aria-labelledby="modalRequestLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalRequestLabel">Make an Appointment</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+<!-- Services Section -->
+<section class="services" id="servicesid">
+    <div class="container">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Comprehensive dental care for the whole family</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-teeth"></i></div>
+                <h3>General Dentistry</h3>
+                <p>Comprehensive dental check-ups and preventive care.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-teeth-open"></i></div>
+                <h3>Cosmetic Dentistry</h3>
+                <p>Transform your smile with our aesthetic treatments.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-tooth"></i></div>
+                <h3>Dental Implants</h3>
+                <p>Permanent solutions for missing teeth.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-crown"></i></div>
+                <h3>Crowns & Bridges</h3>
+                <p>Restore damaged teeth with durable solutions.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-child"></i></div>
+                <h3>Pediatric Dentistry</h3>
+                <p>Specialized dental care for children.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-x-ray"></i></div>
+                <h3>Dental X-Rays</h3>
+                <p>Advanced diagnostic imaging for accurate treatment.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Us Section -->
+<section class="about-us" id="about-usid">
+    <div class="container">
+        <div class="section-header">
+            <h2>About Hope Clinic</h2>
+            <p>Your trusted partner in dental health since 2005</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Hope Clinic is a state-of-the-art dental practice dedicated to providing exceptional dental care in a comfortable and welcoming environment. Our mission is to help patients achieve and maintain optimal oral health through personalized treatment plans and education.</p>
+                <p>With our team of experienced dentists and dental professionals, cutting-edge technology, and patient-centered approach, we're committed to making every dental visit a positive experience.</p>
+                <p>At Hope Clinic, we believe that a healthy smile contributes to overall well-being, and we're passionate about helping our patients achieve their best smile.</p>
+            </div>
+            <div class="about-image">
+                <img src="~/images/images2/Slide2.jpg" alt="Hope Clinic Team">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq">
+    <div class="container">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions about our services</p>
+        </div>
+        <div class="faq-tabs">
+            <div class="faq-tab">
+                <input type="checkbox" id="faq1" class="faq-checkbox">
+                <label for="faq1" class="faq-label">
+                    How often should I visit the dentist?
+                    <span class="faq-arrow"></span>
+                </label>
+                <div class="faq-content">
+                    <p>Most patients should visit the dentist every six months for a check-up and professional cleaning. However, your dentist may recommend more frequent visits based on your specific oral health needs.</p>
                 </div>
-                <div class="modal-body">
-                    <form action="#" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="appointment_name" placeholder="Full Name">
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="appointment_email" placeholder="Email">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control appointment_date" placeholder="Date">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control appointment_time" placeholder="Time">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="appointment_message" class="form-control" cols="30" rows="10" placeholder="Message"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Make an Appointment</button>
-                        </div>
-                    </form>
+            </div>
+
+            <div class="faq-tab">
+                <input type="checkbox" id="faq2" class="faq-checkbox">
+                <label for="faq2" class="faq-label">
+                    What should I do in a dental emergency?
+                    <span class="faq-arrow"></span>
+                </label>
+                <div class="faq-content">
+                    <p>If you're experiencing a dental emergency such as severe pain, swelling, bleeding, or a knocked-out tooth, contact our office immediately. We offer emergency dental services and will provide guidance on what to do until you can be seen.</p>
+                </div>
+            </div>
+
+            <div class="faq-tab">
+                <input type="checkbox" id="faq3" class="faq-checkbox">
+                <label for="faq3" class="faq-label">
+                    Do you accept dental insurance?
+                    <span class="faq-arrow"></span>
+                </label>
+                <div class="faq-content">
+                    <p>Yes, we accept most major dental insurance plans. Our administrative team will help you understand your coverage and maximize your benefits. We also offer payment plans for those without insurance.</p>
+                </div>
+            </div>
+
+            <div class="faq-tab">
+                <input type="checkbox" id="faq4" class="faq-checkbox">
+                <label for="faq4" class="faq-label">
+                    How can I manage dental anxiety?
+                    <span class="faq-arrow"></span>
+                </label>
+                <div class="faq-content">
+                    <p>We understand that dental anxiety is common. Our team is trained to provide gentle care and can offer various comfort measures including sedation options, distraction techniques, and a calm environment to help you feel at ease during your visit.</p>
+                </div>
+            </div>
+
+            <div class="faq-tab">
+                <input type="checkbox" id="faq5" class="faq-checkbox">
+                <label for="faq5" class="faq-label">
+                    What age should children start seeing a dentist?
+                    <span class="faq-arrow"></span>
+                </label>
+                <div class="faq-content">
+                    <p>Children should have their first dental visit by their first birthday or when their first tooth appears. Early dental visits help establish good oral hygiene habits and can prevent future dental problems.</p>
+                </div>
+            </div>
+
+            <div class="faq-tab">
+                <input type="checkbox" id="faq6" class="faq-checkbox">
+                <label for="faq6" class="faq-label">
+                    How can I improve my smile?
+                    <span class="faq-arrow"></span>
+                </label>
+                <div class="faq-content">
+                    <p>We offer various cosmetic dental treatments including teeth whitening, veneers, bonding, and orthodontics to enhance your smile. During a consultation, our dentists can recommend the best options based on your goals and oral health.</p>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- JavaScript Files -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Schedule Your Visit?</h2>
+            <p>Take the first step towards a healthier smile today.</p>
+            <a asp-controller="PatientHome" asp-action="AllDoctors" class="cta-btn">See Doctors</a>
+        </div>
+    </div>
+</section>
 
-</body>
-</html>
+<style>
+    :root {
+        --primary: #2196f3;
+        --primary-dark: #1976d2;
+        --primary-light: #bbdefb;
+        --secondary: #0d47a1;
+        --secondary-dark: #002171;
+        --accent: #42a5f5;
+        --light: #f5f5f5;
+        --dark: #333333;
+        --gray: #78909c;
+        --light-gray: #eceff1;
+    }
+
+    /* Global styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+            .section-header h2::after {
+                content: '';
+                display: block;
+                width: 80px;
+                height: 4px;
+                background-color: var(--primary);
+                margin: 1rem auto 0;
+            }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+    /* Hero section styles */
+    .hero {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        overflow: hidden;
+        background-image: url('@Url.Content("~/images/images2/Slide1.jpg")');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(13, 71, 161, 0.9) 0%, rgba(13, 71, 161, 0.7) 50%, rgba(13, 71, 161, 0.4) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 650px;
+        color: #ffffff;
+        padding: 3rem;
+        border-radius: 15px;
+        margin-left: 8%;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+        color: #ffffff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    /* Button styles */
+    .primary-btn, .hero-btn, .cta-btn, .about-btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: #ffffff;
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border: none;
+        cursor: pointer;
+    }
+
+        .primary-btn:hover, .hero-btn:hover, .cta-btn:hover, .about-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+    .secondary-btn {
+        display: inline-block;
+        background-color: transparent;
+        color: #ffffff;
+        padding: 0.95rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        border: 2px solid #ffffff;
+        cursor: pointer;
+    }
+
+        .secondary-btn:hover {
+            background-color: #ffffff;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+    .about-btn {
+        margin-top: 1.5rem;
+    }
+
+    /* Stats section */
+    .stats {
+        padding: 3rem 0;
+        background-color: var(--primary);
+        color: #ffffff;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    /* Features section styles */
+    .features {
+        padding: 8rem 0;
+        background-color: var(--light);
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .feature-card {
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border-bottom: 4px solid transparent;
+    }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .feature-card h3 {
+            color: var(--secondary);
+            margin: 1rem 0;
+            font-size: 1.5rem;
+        }
+
+    .feature-icon {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+        height: 80px;
+        width: 80px;
+        line-height: 80px;
+        border-radius: 50%;
+        background-color: rgba(33, 150, 243, 0.1);
+        margin: 0 auto 1.5rem;
+    }
+
+    /* Services section styles */
+    .services {
+        padding: 8rem 0;
+        background-color: #ffffff;
+    }
+
+    .service-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .service-card {
+        background-color: var(--light);
+        padding: 2.5rem;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+            .service-card:hover::before {
+                transform: scaleX(1);
+            }
+
+        .service-card h3 {
+            color: var(--secondary);
+            margin: 1rem 0;
+            font-size: 1.4rem;
+        }
+
+    .service-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+        height: 70px;
+        width: 70px;
+        line-height: 70px;
+        border-radius: 50%;
+        background-color: rgba(33, 150, 243, 0.1);
+        margin: 0 auto 1.5rem;
+    }
+
+    .service-link {
+        display: inline-block;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .service-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .service-link i {
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-link:hover i {
+            transform: translateX(5px);
+        }
+
+    /* Testimonials section */
+    .testimonials {
+        padding: 8rem 0;
+        background-color: var(--light);
+    }
+
+    .testimonial-slider {
+        display: flex;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        position: relative;
+    }
+
+    .testimonial-item {
+        min-width: 100%;
+        padding: 0 1rem;
+        box-sizing: border-box;
+    }
+
+    .testimonial-content {
+        background-color: #ffffff;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        position: relative;
+    }
+
+        .testimonial-content::before {
+            content: '\201C';
+            font-size: 6rem;
+            color: rgba(33, 150, 243, 0.1);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: serif;
+            line-height: 1;
+        }
+
+    .testimonial-rating {
+        margin-bottom: 1.5rem;
+        color: #ffc107;
+    }
+
+    .testimonial-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        color: var(--dark);
+    }
+
+    .testimonial-author {
+        margin-top: 1.5rem;
+    }
+
+    .author-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--secondary);
+    }
+
+    .author-title {
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+
+    .testimonial-controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .testimonial-prev, .testimonial-next {
+        background-color: var(--primary);
+        color: #ffffff;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .testimonial-prev:hover, .testimonial-next:hover {
+            background-color: var(--primary-dark);
+        }
+
+    /* About Us section styles */
+    .about-us {
+        padding: 8rem 0;
+        background-color: #ffffff;
+    }
+
+    .about-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4rem;
+        background-color: var(--light);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .about-text {
+        flex: 1;
+    }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+    .about-image {
+        flex: 1;
+        text-align: center;
+    }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+            .about-image img:hover {
+                transform: scale(1.03);
+            }
+
+    /* FAQ section styles - NEW DESIGN WITH TABS */
+    .faq {
+        padding: 8rem 0;
+        background-color: var(--light);
+    }
+
+    .faq-tabs {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-tab {
+        margin-bottom: 1.5rem;
+        border-radius: 10px;
+        overflow: hidden;
+        background: linear-gradient(to right, var(--primary-light), #ffffff);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .faq-checkbox {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+
+    .faq-label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 1.5rem;
+        font-weight: 600;
+        color: var(--secondary);
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+        .faq-label:hover {
+            background-color: rgba(33, 150, 243, 0.05);
+        }
+
+    .faq-arrow {
+        position: relative;
+        width: 20px;
+        height: 20px;
+    }
+
+        .faq-arrow::before,
+        .faq-arrow::after {
+            content: '';
+            position: absolute;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .faq-arrow::before {
+            top: 9px;
+            left: 0;
+            width: 20px;
+            height: 2px;
+        }
+
+        .faq-arrow::after {
+            top: 0;
+            left: 9px;
+            width: 2px;
+            height: 20px;
+        }
+
+    .faq-checkbox:checked ~ .faq-label .faq-arrow::after {
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+
+    .faq-content {
+        max-height: 0;
+        padding: 0 1.5rem;
+        color: var(--gray);
+        background: white;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .faq-checkbox:checked ~ .faq-content {
+        max-height: 300px;
+        padding: 0 1.5rem 1.5rem;
+    }
+
+    /* CTA Section */
+    .cta {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: #ffffff;
+    }
+
+    .cta-content {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .cta h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    .cta-btn {
+        background-color: #ffffff;
+        color: var(--primary);
+    }
+
+        .cta-btn:hover {
+            background-color: var(--light);
+            color: var(--primary-dark);
+        }
+
+    /* Responsive styles */
+    @@media (max-width: 1200px) {
+        .hero h1
+
+    {
+        font-size: 3.5rem;
+    }
+
+    }
+
+    @@media (max-width: 991px) {
+        .hero h1
+
+    {
+        font-size: 3rem;
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+    }
+
+    .hero-btn {
+        padding: 0.9rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    .about-content {
+        flex-direction: column;
+    }
+
+    .hero-content {
+        margin-left: 5%;
+        max-width: 90%;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    }
+
+    @@media (max-width: 768px) {
+        .hero h1
+
+    {
+        font-size: 2.5rem;
+    }
+
+    .section-header h2 {
+        font-size: 2.2rem;
+    }
+
+    .feature-card, .service-card {
+        padding: 2rem;
+    }
+
+    .feature-icon, .service-icon {
+        font-size: 2.2rem;
+        height: 60px;
+        width: 60px;
+        line-height: 60px;
+    }
+
+    .testimonial-content {
+        padding: 2rem;
+    }
+
+    }
+
+    @@media (max-width: 576px) {
+        .hero h1
+
+    {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // No JavaScript needed for FAQ functionality as it uses CSS-only approach with checkboxes
+
+        // Testimonial slider functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.testimonial-item');
+            if (slides.length > 0) {
+                const slideCount = slides.length;
+
+                function showSlide(index) {
+                    if (index < 0) index = slideCount - 1;
+                    if (index >= slideCount) index = 0;
+
+                    currentSlide = index;
+                    const offset = -currentSlide * 100 + '%';
+                    document.querySelector('.testimonial-slider').style.transform = 'translateX(' + offset + ')';
+                }
+
+                const nextBtn = document.querySelector('.testimonial-next');
+                const prevBtn = document.querySelector('.testimonial-prev');
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        showSlide(currentSlide + 1);
+                    });
+                }
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        showSlide(currentSlide - 1);
+                    });
+                }
+
+                // Auto-rotate testimonials
+                setInterval(function() {
+                    showSlide(currentSlide + 1);
+                }, 5000);
+            }
+        });
+    </script>
+}

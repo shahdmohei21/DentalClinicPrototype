@@ -22,26 +22,6 @@ namespace DentalClinicPrototype.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DentalClinicPrototype.Models.Admin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserID")
-                        .IsUnique();
-
-                    b.ToTable("Admin");
-                });
-
             modelBuilder.Entity("DentalClinicPrototype.Models.Appointment", b =>
                 {
                     b.Property<int>("Id")
@@ -50,19 +30,8 @@ namespace DentalClinicPrototype.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DoctorID")
+                    b.Property<int>("DoctorScheduleID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAccepted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Message")
                         .IsRequired()
@@ -71,13 +40,9 @@ namespace DentalClinicPrototype.Migrations
                     b.Property<int>("PatientID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorID");
+                    b.HasIndex("DoctorScheduleID");
 
                     b.HasIndex("PatientID");
 
@@ -92,11 +57,14 @@ namespace DentalClinicPrototype.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FullName")
+                    b.Property<int>("Experience")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Qualification")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Specialization")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -104,12 +72,39 @@ namespace DentalClinicPrototype.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("appointmentPrice")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserID")
                         .IsUnique();
 
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("DentalClinicPrototype.Models.DoctorSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DoctorID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ScheduleDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ScheduleStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorID");
+
+                    b.ToTable("DoctorSchedules");
                 });
 
             modelBuilder.Entity("DentalClinicPrototype.Models.MedicalRecord", b =>
@@ -130,17 +125,12 @@ namespace DentalClinicPrototype.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DoctorId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
-
-                    b.HasIndex("DoctorId1");
 
                     b.HasIndex("PatientId");
 
@@ -154,14 +144,6 @@ namespace DentalClinicPrototype.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserID")
                         .IsRequired()
@@ -183,15 +165,22 @@ namespace DentalClinicPrototype.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DoctorID")
                         .HasColumnType("int");
 
                     b.Property<int>("PatientID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReviewText")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 
@@ -222,6 +211,7 @@ namespace DentalClinicPrototype.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -406,31 +396,21 @@ namespace DentalClinicPrototype.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DentalClinicPrototype.Models.Admin", b =>
-                {
-                    b.HasOne("DentalClinicPrototype.Models.User", "User")
-                        .WithOne("Admin")
-                        .HasForeignKey("DentalClinicPrototype.Models.Admin", "UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DentalClinicPrototype.Models.Appointment", b =>
                 {
-                    b.HasOne("DentalClinicPrototype.Models.Doctor", "Doctor")
+                    b.HasOne("DentalClinicPrototype.Models.DoctorSchedule", "DoctorSchedule")
                         .WithMany()
-                        .HasForeignKey("DoctorID")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("DoctorScheduleID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("DentalClinicPrototype.Models.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Doctor");
+                    b.Navigation("DoctorSchedule");
 
                     b.Navigation("Patient");
                 });
@@ -446,22 +426,29 @@ namespace DentalClinicPrototype.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DentalClinicPrototype.Models.DoctorSchedule", b =>
+                {
+                    b.HasOne("DentalClinicPrototype.Models.Doctor", "Doctor")
+                        .WithMany("DoctorSchedules")
+                        .HasForeignKey("DoctorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
             modelBuilder.Entity("DentalClinicPrototype.Models.MedicalRecord", b =>
                 {
                     b.HasOne("DentalClinicPrototype.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DentalClinicPrototype.Models.Doctor", null)
                         .WithMany("MedicalRecords")
-                        .HasForeignKey("DoctorId1");
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("DentalClinicPrototype.Models.Patient", "Patient")
                         .WithMany("MedicalRecords")
                         .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Doctor");
@@ -483,15 +470,15 @@ namespace DentalClinicPrototype.Migrations
             modelBuilder.Entity("DentalClinicPrototype.Models.Review", b =>
                 {
                     b.HasOne("DentalClinicPrototype.Models.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("DoctorID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("DentalClinicPrototype.Models.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("PatientID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Doctor");
@@ -552,18 +539,22 @@ namespace DentalClinicPrototype.Migrations
 
             modelBuilder.Entity("DentalClinicPrototype.Models.Doctor", b =>
                 {
+                    b.Navigation("DoctorSchedules");
+
                     b.Navigation("MedicalRecords");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("DentalClinicPrototype.Models.Patient", b =>
                 {
                     b.Navigation("MedicalRecords");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("DentalClinicPrototype.Models.User", b =>
                 {
-                    b.Navigation("Admin");
-
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");

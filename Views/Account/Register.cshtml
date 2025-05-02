@@ -1,0 +1,149 @@
+﻿@model DentalClinicPrototype.Models.RegisterVM
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header text-center py-4" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border: none;">
+                    <h2 class="text-white mb-0">Create Your Account</h2>
+                    <p class="text-white-50 mb-0">Join our dental clinic community</p>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Register" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="FullName" class="control-label font-weight-bold">Full Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-right-0">
+                                                <i class="fas fa-user text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input asp-for="FullName" class="form-control border-left-0" placeholder="Enter your full name" />
+                                    </div>
+                                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="UserName" class="control-label font-weight-bold">Username</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-right-0">
+                                                <i class="fas fa-at text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input asp-for="UserName" class="form-control border-left-0" placeholder="Choose a username" />
+                                    </div>
+                                    <span asp-validation-for="UserName" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Email" class="control-label font-weight-bold">Email Address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-right-0">
+                                                <i class="fas fa-envelope text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input asp-for="Email" class="form-control border-left-0" type="email" placeholder="Enter your email" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="PhoneNumber" class="control-label font-weight-bold">Phone Number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-right-0">
+                                                <i class="fas fa-phone text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input asp-for="PhoneNumber" class="form-control border-left-0" placeholder="Enter your phone number" />
+                                    </div>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Password" class="control-label font-weight-bold">Password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-right-0">
+                                                <i class="fas fa-lock text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input asp-for="Password" class="form-control border-left-0" type="password" placeholder="Create a password" />
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger small"></span>
+                                    <small class="form-text text-muted">Password must be at least 8 characters long with letters and numbers</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="ConfirmPassword" class="control-label font-weight-bold">Confirm Password</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-light border-right-0">
+                                                <i class="fas fa-lock text-primary"></i>
+                                            </span>
+                                        </div>
+                                        <input asp-for="ConfirmPassword" class="form-control border-left-0" type="password" placeholder="Confirm your password" />
+                                    </div>
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label asp-for="Image" class="control-label font-weight-bold">Profile Image</label>
+                            <div class="custom-file">
+                                <input asp-for="Image" class="custom-file-input" type="file" accept="image/*" id="customFile" />
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                            <span asp-validation-for="Image" class="text-danger small"></span>
+                            <small class="form-text text-muted">Upload a profile picture (optional)</small>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block py-2 font-weight-bold">
+                                <i class="fas fa-user-plus mr-2"></i>Create Account
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <p class="mb-0">Already have an account? <a asp-action="Login" class="text-primary font-weight-bold">Login here</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Update custom file input label with selected filename
+        $('.custom-file-input').on('change', function() {
+            var fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').html(fileName || 'Choose file');
+        });
+    </script>
+}

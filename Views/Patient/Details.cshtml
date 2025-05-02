@@ -1,0 +1,178 @@
+﻿@model DentalClinicPrototype.Models.Patient
+
+@{
+    ViewData["Title"] = "Patient Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="admin-card">
+            <div class="card-header">
+                <h5>Patient Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    @if (!string.IsNullOrEmpty(Model.User.ImageUrl))
+                    {
+                        <img src="~/images/users/@Model.User.ImageUrl" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="Patient Image" />
+                    }
+                    else
+                    {
+                        <img src="~/images/default-user.png" class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;" alt="Default Profile" />
+                    }
+                    <h4 class="mt-3">@Model.User.FullName</h4>
+                    <p class="text-muted">Patient ID: @Model.Id</p>
+                </div>
+
+                <div class="patient-info">
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Email:</span>
+                        <span>@Model.User.Email</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span class="text-muted">Phone:</span>
+                        <span>@Model.User.PhoneNumber</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="admin-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>Medical Records</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.MedicalRecords != null && Model.MedicalRecords.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Diagnosis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var record in Model.MedicalRecords)
+                                {
+                                    <tr>
+                                        <td>@record.Doctor.User.FullName</td>
+                                        <td>@record.Diagnosis</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        No medical records found for this patient.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Medical Record Modal -->
+<div class="modal fade" id="addMedicalRecordModal" tabindex="-1" role="dialog" aria-labelledby="addMedicalRecordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: var(--primary); color: white;">
+                <h5 class="modal-title" id="addMedicalRecordModalLabel">Add Medical Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addMedicalRecordForm">
+                <div class="modal-body">
+                    <input type="hidden" name="PatientId" value="@Model.Id" />
+
+                    <div class="form-group">
+                        <label for="DoctorId">Doctor</label>
+                        <select class="form-control" id="DoctorId" name="DoctorId" required>
+                            <option value="">Select Doctor</option>
+                            <!-- Doctors would be populated here -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Date">Date</label>
+                        <input type="date" class="form-control" id="Date" name="Date" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Diagnosis">Diagnosis</label>
+                        <textarea class="form-control" id="Diagnosis" name="Diagnosis" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Treatment">Treatment</label>
+                        <textarea class="form-control" id="Treatment" name="Treatment" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Notes">Notes</label>
+                        <textarea class="form-control" id="Notes" name="Notes" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn" style="background-color: var(--primary); color: white;">Save Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Load doctors for the medical record form
+            $.ajax({
+                url: '/Doctor/GetDoctors',
+                type: 'GET',
+                success: function (data) {
+                    var options = '<option value="">Select Doctor</option>';
+                    $.each(data, function (i, doctor) {
+                        options += '<option value="' + doctor.id + '">' + doctor.name + '</option>';
+                    });
+                    $('#DoctorId').html(options);
+                }
+            });
+
+            // Handle medical record form submission
+            $('#addMedicalRecordForm').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/MedicalRecord/Create',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            $('#addMedicalRecordModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while saving the medical record.');
+                    }
+                });
+            });
+
+            // View medical record details
+            $('.view-record').click(function () {
+                var recordId = $(this).data('id');
+                // Implement view record functionality
+                alert('View record with ID: ' + recordId);
+            });
+        });
+    </script>
+}

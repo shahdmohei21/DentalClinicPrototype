@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DentalClinicPrototype.Models.Appointment>
+
+@{
+    ViewData["Title"] = "My Appointments";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="doctor-card">
+    <div class="card-header">
+        <h5>My Appointments</h5>
+    </div>
+    <div class="card-body">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Patient?.User?.UserName</td>
+                                <td>@item.DoctorSchedule?.ScheduleDateTime.ToString("MMM dd, yyyy - hh:mm tt")</td>
+                                <td>
+                                    @if (item.DoctorSchedule?.ScheduleStatus == DentalClinicPrototype.Models.ScheduleStatus.Booked)
+                                    {
+                                        <span class="badge badge-primary">Booked</span>
+                                    }
+                                    else if (item.DoctorSchedule?.ScheduleStatus == DentalClinicPrototype.Models.ScheduleStatus.Cancelled)
+                                    {
+                                        <span class="badge badge-danger">Cancelled</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle mr-2"></i> You don't have any appointments yet.
+            </div>
+        }
+    </div>
+</div>

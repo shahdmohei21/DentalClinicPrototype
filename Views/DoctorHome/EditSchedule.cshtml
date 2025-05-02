@@ -1,0 +1,41 @@
+﻿@model DentalClinicPrototype.Models.DoctorSchedule
+
+@{
+    ViewData["Title"] = "Edit Schedule";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+}
+
+<div class="doctor-card">
+    <div class="card-header">
+        <h5>Edit Schedule</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="EditSchedule" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="DoctorID" />
+
+            <div class="form-group">
+                <label asp-for="ScheduleDateTime" class="control-label">Date & Time</label>
+                <input asp-for="ScheduleDateTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="ScheduleDateTime" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save mr-1"></i> Save Changes
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left mr-1"></i> Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

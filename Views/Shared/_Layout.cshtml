@@ -1,113 +1,648 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>@ViewBag.Title - Hope Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dental Clinic</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="~/css/open-iconic-bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/animate.css" />
-    <link rel="stylesheet" href="~/css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" />
-    <link rel="stylesheet" href="~/css/magnific-popup.css" />
-    <link rel="stylesheet" href="~/css/aos.css" />
-    <link rel="stylesheet" href="~/css/ionicons.min.css" />
-    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="~/css/jquery.timepicker.css" />
-    <link rel="stylesheet" href="~/css/flaticon.css" />
-    <link rel="stylesheet" href="~/css/icomoon.css" />
-    <link rel="stylesheet" href="~/css/style.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-   
+    <style>
+        :root {
+            --primary: #2196f3;
+            --primary-light: #bbdefb;
+            --primary-dark: #1976d2;
+            --secondary: #0d47a1;
+            --secondary-dark: #002171;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #444444;
+            background-color: #f8f9fa;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto; /* This will make the main content take up all available space */
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--secondary);
+            padding: 8px 0;
+            font-size: 14px;
+            color: white;
+        }
+
+            .top-bar i {
+                color: var(--primary);
+                margin-right: 8px;
+            }
+
+        /* Header */
+        .main-header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 997;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+            .logo span {
+                color: var(--primary);
+            }
+
+        .navbar {
+            padding: 0;
+        }
+
+            .navbar ul {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                list-style: none;
+                align-items: center;
+            }
+
+            .navbar li {
+                position: relative;
+                padding: 10px 0 10px 28px;
+            }
+
+            .navbar a {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 15px;
+                font-weight: 500;
+                color: var(--secondary);
+                white-space: nowrap;
+                transition: 0.3s;
+                text-decoration: none;
+            }
+
+                .navbar a:hover, .navbar .active {
+                    color: var(--primary);
+                }
+
+        .appointment-btn {
+            margin-left: 25px;
+            background: var(--primary);
+            color: white !important;
+            border-radius: 50px;
+            padding: 8px 25px;
+            white-space: nowrap;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+            .appointment-btn:hover {
+                background: var(--primary-dark);
+                color: white;
+                text-decoration: none;
+            }
+
+        .auth-btn {
+            margin-left: 10px;
+            border-radius: 50px;
+            padding: 8px 20px;
+            white-space: nowrap;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: var(--primary) !important;
+            border: 2px solid var(--primary);
+        }
+
+            .login-btn:hover {
+                background: var(--primary);
+                color: white !important;
+                text-decoration: none;
+            }
+
+        .register-btn {
+            background: var(--primary);
+            color: white !important;
+        }
+
+            .register-btn:hover {
+                background: var(--primary-dark);
+                color: white;
+                text-decoration: none;
+            }
+
+        .user-dropdown .dropdown-toggle::after {
+            display: none;
+        }
+
+        .user-dropdown .dropdown-menu {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 10px 0;
+        }
+
+        .user-dropdown .dropdown-item {
+            font-size: 14px;
+            padding: 8px 20px;
+            transition: 0.3s;
+        }
+
+            .user-dropdown .dropdown-item:hover {
+                background-color: #f1f5f9;
+                color: var(--primary);
+            }
+
+        .user-dropdown .dropdown-divider {
+            margin: 5px 0;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 8px;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 30px 0;
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+
+            footer h3 {
+                font-size: 20px;
+                color: white;
+                position: relative;
+                padding-bottom: 12px;
+                margin-bottom: 20px;
+            }
+
+                footer h3:after {
+                    content: '';
+                    position: absolute;
+                    display: block;
+                    width: 50px;
+                    height: 2px;
+                    background: var(--primary);
+                    bottom: 0;
+                    left: 0;
+                }
+
+            footer ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                footer ul li {
+                    padding: 10px 0;
+                    display: flex;
+                    align-items: center;
+                }
+
+                    footer ul li i {
+                        padding-right: 10px;
+                        color: var(--primary);
+                    }
+
+        .social-links a {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            line-height: 40px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            margin-right: 10px;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+            .social-links a:hover {
+                background: var(--primary-dark);
+                color: white;
+                text-decoration: none;
+            }
+
+        .copyright {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav-toggle {
+            position: fixed;
+            right: 15px;
+            top: 15px;
+            z-index: 9998;
+            border: 0;
+            background: none;
+            font-size: 24px;
+            transition: all 0.4s;
+            outline: none !important;
+            line-height: 1;
+            cursor: pointer;
+            text-align: right;
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(13, 71, 161, 0.8), rgba(13, 71, 161, 0.8)), url('/images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+            .service-card:hover {
+                transform: translateY(-10px);
+            }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* Appointment Section */
+        .appointment-section {
+            background: linear-gradient(rgba(13, 71, 161, 0.9), rgba(13, 71, 161, 0.9)), url('/images/appointment-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            color: white;
+        }
+
+        .appointment-form {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+            .appointment-form h3 {
+                color: var(--secondary);
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+        /* Form Styles */
+        .form-control {
+            height: calc(2.5em + 0.75rem + 2px);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+            .form-control:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+            }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+
+            .btn-primary:hover {
+                background-color: var(--primary-dark);
+                border-color: var(--primary-dark);
+            }
+
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            background-color: transparent;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+            .breadcrumb-item a:hover {
+                text-decoration: underline;
+            }
+
+        .breadcrumb-item.active {
+            color: #6c757d;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+        }
+
+        /* FAQ Section Styles */
+        .faq-tabs {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-tab {
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(to right, var(--primary-light), #ffffff);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-checkbox {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        .faq-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+            .faq-label:hover {
+                background-color: rgba(33, 150, 243, 0.05);
+            }
+
+        .faq-arrow {
+            position: relative;
+            width: 20px;
+            height: 20px;
+        }
+
+            .faq-arrow::before,
+            .faq-arrow::after {
+                content: '';
+                position: absolute;
+                background-color: var(--primary);
+                transition: all 0.3s ease;
+            }
+
+            .faq-arrow::before {
+                top: 9px;
+                left: 0;
+                width: 20px;
+                height: 2px;
+            }
+
+            .faq-arrow::after {
+                top: 0;
+                left: 9px;
+                width: 2px;
+                height: 20px;
+            }
+
+        .faq-checkbox:checked ~ .faq-label .faq-arrow::after {
+            transform: rotate(90deg);
+            opacity: 0;
+        }
+
+        .faq-content {
+            max-height: 0;
+            padding: 0 1.5rem;
+            color: var(--dark);
+            background: white;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .faq-checkbox:checked ~ .faq-content {
+            max-height: 300px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        @@media (max-width: 991px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .navbar ul {
+                display: none;
+            }
+
+                .navbar ul.mobile-nav-active {
+                    display: block;
+                    position: absolute;
+                    top: 55px;
+                    right: 15px;
+                    background: white;
+                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+                    border-radius: 10px;
+                    padding: 20px;
+                    z-index: 999;
+                }
+
+                    .navbar ul.mobile-nav-active li {
+                        padding: 10px 0;
+                    }
+
+            .appointment-btn, .auth-btn {
+                margin: 0;
+                padding: 10px 15px;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-            <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Hope<span>clinic</span></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="oi oi-menu"></span> Menu
-                </button>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a href="/" class="logo">Dental<span>Clinic</span></a>
 
-                <div class="collapse navbar-collapse" id="ftco-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Services" ? "active" : "")">
-                            <a class="nav-link" asp-controller="Home" asp-action="services">Services</a>
-                        </li>
-                        <li class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Doctors" ? "active" : "")">
-                            <a class="nav-link" asp-controller="Home" asp-action="doctors">Doctors</a>
-                        </li>
-                        <li class="nav-item cta">
-                            <a class="nav-link" href="#quote">
-                                <span>Make an Appointment</span>
+            <button class="mobile-nav-toggle d-lg-none">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav class="navbar">
+                <ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="user-dropdown dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if (!string.IsNullOrEmpty(User.FindFirst("ImageUrl")?.Value))
+                                {
+                                    <img src="~/images/users/@User.FindFirst("ImageUrl").Value" alt="User" class="user-avatar" />
+                                }
+                                else
+                                {
+                                    <img src="~/images/default-user.png" alt="User" class="user-avatar" />
+                                }
+                                <span>@User.Identity.Name</span>
+                                <i class="fas fa-chevron-down ml-2" style="font-size: 12px;"></i>
+
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-                                <a class="btn btn-primary px-4 py-3" asp-controller="Account" asp-action="signin">Login</a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" asp-controller="Account" asp-action="EditProfile">
+                                    <i class="fas fa-user-circle mr-2"></i> My Profile
+                                </a>
 
+                                @if (User.IsInRole("Patient"))
+                                {
+                                    <a class="dropdown-item" asp-controller="PatientHome" asp-action="MyAppointments">
+                                        <i class="fas fa-calendar-check mr-2"></i> My Appointments
+                                    </a>
+                                    <a class="dropdown-item" asp-controller="PatientHome" asp-action="ViewMedicalRecord">
+                                        <i class="fas fa-prescription-bottle-alt mr-2"></i> my Medical Record
+                                    </a>
+                                }
+
+                                <div class="dropdown-divider"></div>
+                                <form asp-controller="Account" asp-action="Logout" method="post">
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login" class="auth-btn login-btn">Login</a></li>
+                        <li><a asp-controller="Account" asp-action="Register" class="auth-btn register-btn">Register</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <!-- Main Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
 
-    <footer class="ftco-footer ftco-bg-dark ftco-section">
+    <!-- Footer -->
+    <footer>
         <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-3">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Hope Clinic</h2>
-                        <p>follow us in social media</p>
-                    </div>
-                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft ">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2">
-                    <div class="ftco-footer-widget mb-4 ml-md-5">
-                        <ul class="list-unstyled">
-
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">clinic location</h2>
-                        <div class="block-23 mb-3">
-                            <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">Assiut governorate, Feryal st., bulding num 211.</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">19723</span></a></li>
-                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">hopeclinic@gmail.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            <div class="copyright">
+                &copy; @DateTime.Now.Year <strong><span>Dental Clinic</span></strong>. All Rights Reserved
             </div>
-           
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        // Mobile Navigation Toggle
+        $(document).ready(function() {
+            $('.mobile-nav-toggle').on('click', function() {
+                $('.navbar ul').toggleClass('mobile-nav-active');
+                $(this).find('i').toggleClass('fa-bars fa-times');
+            });
+
+            // Close mobile menu when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.navbar').length && !$(e.target).closest('.mobile-nav-toggle').length) {
+                    $('.navbar ul').removeClass('mobile-nav-active');
+                    $('.mobile-nav-toggle i').removeClass('fa-times').addClass('fa-bars');
+                }
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

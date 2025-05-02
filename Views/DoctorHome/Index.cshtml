@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DentalClinicPrototype.Models.DoctorSchedule>
+
+@{
+    ViewData["Title"] = "My Schedule";
+    Layout = "~/Views/Shared/_DoctorLayout.cshtml";
+
+}
+
+<div class="doctor-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5>My Schedule</h5>
+    </div>
+    <div class="card-body">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ScheduleDateTime.ToString("MMM dd, yyyy - hh:mm tt")</td>
+                                <td>
+                                    @if (item.ScheduleStatus == DentalClinicPrototype.Models.ScheduleStatus.Available)
+                                    {
+                                        <span class="badge badge-success">Available</span>
+                                    }
+                                    else if (item.ScheduleStatus == DentalClinicPrototype.Models.ScheduleStatus.Booked)
+                                    {
+                                        <span class="badge badge-primary">Booked</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Cancelled</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-action="EditSchedule" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle mr-2"></i> You don't have any schedules yet. Click "Add New Schedule" to create one.
+            </div>
+        }
+    </div>
+</div>

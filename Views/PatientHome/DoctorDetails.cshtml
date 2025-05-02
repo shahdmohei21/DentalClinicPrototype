@@ -1,0 +1,155 @@
+﻿@model DentalClinicPrototype.Models.Doctor
+
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<!-- Breadcrumb -->
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-action="AllDoctors">All Doctors</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Doctor Details</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        @if (!string.IsNullOrEmpty(Model.User?.ImageUrl))
+                        {
+                            <img src="~/images/users/@Model.User.ImageUrl" alt="@Model.User?.FullName" class="rounded-circle mb-4" style="width: 180px; height: 180px; object-fit: cover; border: 4px solid var(--primary);">
+                        }
+                        else
+                        {
+                            <img src="~/images/default-doctor.png" alt="@Model.User?.FullName" class="rounded-circle mb-4" style="width: 180px; height: 180px; object-fit: cover; border: 4px solid var(--primary);">
+                        }
+                        <h4 class="mb-1">Dr. @Model.User?.FullName</h4>
+                        <p class="text-muted mb-3">@Model.Specialization</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="DoctorSchedule" asp-route-id="@Model.Id" class="btn btn-primary btn-lg btn-block">
+                                <i class="fas fa-calendar-check mr-2"></i> Book Appointment
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="login" asp-controller="Account" class="btn btn-primary btn-lg btn-block">
+                                <i class="fas fa-sign-in-alt mr-2"></i> Log in to Book Appointment
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0" style="color: var(--secondary);">Doctor Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p class="mb-1 text-muted">Specialization</p>
+                                <h6>@Model.Specialization</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1 text-muted">Qualification</p>
+                                <h6>@Model.Qualification</h6>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p class="mb-1 text-muted">Experience</p>
+                                <h6>@Model.Experience years</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1 text-muted">Appointment Fee</p>
+                                <h6>$@Model.appointmentPrice</h6>
+                            </div>
+                        </div>
+                        <hr>
+                        <h6 class="mb-3" style="color: var(--secondary);">About Doctor</h6>
+                        <p>
+                            Dr. @Model.User?.FullName is a highly skilled dental professional with @Model.Experience years of experience in @Model.Specialization.
+                            Committed to providing exceptional dental care, Dr. @Model.User?.FullName combines expertise with a compassionate approach to ensure
+                            patients receive the best treatment in a comfortable environment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0" style="color: var(--secondary);">Patient Reviews</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Reviews != null && Model.Reviews.Any())
+                        {
+                            foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
+                            {
+                                <div class="media mb-4">
+                                    <img src="~/images/users/@review.Patient.User.ImageUrl" class="mr-3 rounded-circle" alt="Patient" style="width: 50px; height: 50px;">
+                                    <div class="media-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="mt-0 mb-1">@review.Patient?.User?.FullName</h6>
+                                            <small class="text-muted">@review.CreatedAt.ToString("MMM dd, yyyy")</small>
+                                        </div>
+                                        <div class="mb-2">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= review.Rating)
+                                                {
+                                                    <i class="fas fa-star text-warning"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="far fa-star text-warning"></i>
+                                                }
+                                            }
+                                        </div>
+                                        <p>@review.ReviewText</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <i class="far fa-comment-dots fa-3x mb-3" style="color: var(--primary);"></i>
+                                <p>No reviews yet. Be the first to review after your appointment!</p>
+                            </div>
+                        }
+
+                        @if (User.IsInRole("Patient"))
+                        {
+                            <hr />
+                            <h6 class="mb-3">Leave a Review</h6>
+                            <form asp-action="AddReview" method="post">
+                                <input type="hidden" name="DoctorID" value="@Model.Id" />
+                                <div class="form-group">
+                                    <label for="Rating">Rating (1–5)</label>
+                                    <select name="Rating" class="form-control" required>
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ReviewText">Your Review</label>
+                                    <textarea name="ReviewText" class="form-control" maxlength="500" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-2">Submit Review</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

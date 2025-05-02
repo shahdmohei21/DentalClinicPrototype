@@ -12,47 +12,49 @@ namespace DentalClinicPrototype.Models
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Appointment>()
-    .HasOne(a => a.Patient)
-    .WithMany()
-    .HasForeignKey(a => a.PatientID)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(a => a.Patient)
+                .WithMany()
+                .HasForeignKey(a => a.PatientID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Appointment>()
-                .HasOne(a => a.Doctor)
+                .HasOne(a => a.DoctorSchedule)
                 .WithMany()
-                .HasForeignKey(a => a.DoctorID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(a => a.DoctorScheduleID)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<MedicalRecord>()
                 .HasOne(m => m.Patient)
                 .WithMany(p => p.MedicalRecords)
-                .HasForeignKey("PatientId")
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(r => r.PatientId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<MedicalRecord>()
                 .HasOne(m => m.Doctor)
-                .WithMany()
-                .HasForeignKey("DoctorId")
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(d=>d.MedicalRecords)
+                .HasForeignKey(r => r.DoctorId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Patient)
-                .WithMany()
-                .HasForeignKey("PatientID")
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(p=>p.Reviews)
+                .HasForeignKey(r => r.PatientID)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Doctor)
-                .WithMany()
-                .HasForeignKey("DoctorID")
-                .OnDelete(DeleteBehavior.Restrict);
+                .WithMany(p => p.Reviews)
+                .HasForeignKey(r => r.DoctorID)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

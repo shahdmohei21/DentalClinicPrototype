@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Dashboard - Hope Clinic</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        :root {
+            --primary: #3fbbc0;
+            --secondary: #173b6c;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --admin-primary: #4e73df;
+            --admin-secondary: #224abe;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #444444;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Admin Sidebar */
+        .admin-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        .admin-sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, var(--secondary) 0%, #2a5298 100%);
+            color: white;
+            min-height: calc(100vh - 70px);
+            position: fixed;
+            left: 0;
+            top: 70px;
+            z-index: 996;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .admin-sidebar-collapsed {
+            width: 70px;
+        }
+
+        .admin-sidebar .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+            .admin-sidebar .sidebar-header h3 {
+                color: white;
+                font-size: 18px;
+                margin: 0;
+                font-weight: 600;
+            }
+
+        .admin-sidebar ul.sidebar-menu {
+            padding: 20px 0;
+            list-style: none;
+            margin: 0;
+        }
+
+            .admin-sidebar ul.sidebar-menu li {
+                position: relative;
+            }
+
+                .admin-sidebar ul.sidebar-menu li a {
+                    padding: 12px 20px;
+                    display: flex;
+                    align-items: center;
+                    color: rgba(255, 255, 255, 0.8);
+                    transition: all 0.3s;
+                    text-decoration: none;
+                    font-size: 14px;
+                }
+
+                    .admin-sidebar ul.sidebar-menu li a:hover,
+                    .admin-sidebar ul.sidebar-menu li a.active {
+                        color: white;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-left: 4px solid var(--primary);
+                    }
+
+                    .admin-sidebar ul.sidebar-menu li a i {
+                        margin-right: 15px;
+                        width: 20px;
+                        text-align: center;
+                        font-size: 16px;
+                    }
+
+                    .admin-sidebar ul.sidebar-menu li a .menu-text {
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+        .admin-sidebar-collapsed ul.sidebar-menu li a .menu-text {
+            display: none;
+        }
+
+        .admin-sidebar ul.sidebar-menu li.sidebar-header {
+            padding: 10px 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .admin-sidebar-collapsed ul.sidebar-menu li.sidebar-header {
+            display: none;
+        }
+
+        .admin-sidebar ul.sidebar-menu li .submenu {
+            list-style: none;
+            padding-left: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .admin-sidebar ul.sidebar-menu li.open .submenu {
+            max-height: 500px;
+        }
+
+        .admin-sidebar ul.sidebar-menu li .submenu li a {
+            padding-left: 55px;
+            font-size: 13px;
+        }
+
+        .admin-sidebar ul.sidebar-menu li a .dropdown-icon {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+
+        .admin-sidebar ul.sidebar-menu li.open a .dropdown-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Admin Content */
+        .admin-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+            margin-top: 70px;
+            transition: all 0.3s;
+        }
+
+        .admin-content-expanded {
+            margin-left: 70px;
+        }
+
+        /* Admin Header */
+        .admin-header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 997;
+            height: 70px;
+        }
+
+            .admin-header .logo {
+                font-size: 24px;
+                font-weight: 700;
+                color: var(--secondary);
+                text-decoration: none;
+                margin-left: 20px;
+            }
+
+                .admin-header .logo span {
+                    color: var(--primary);
+                }
+
+            .admin-header .sidebar-toggle {
+                background: none;
+                border: none;
+                color: var(--secondary);
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0 15px;
+                transition: all 0.3s;
+            }
+
+                .admin-header .sidebar-toggle:hover {
+                    color: var(--primary);
+                }
+
+            .admin-header .user-dropdown .dropdown-toggle::after {
+                display: none;
+            }
+
+            .admin-header .user-dropdown .dropdown-menu {
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                border: none;
+                padding: 10px 0;
+                right: 0;
+                left: auto;
+            }
+
+            .admin-header .user-dropdown .dropdown-item {
+                font-size: 14px;
+                padding: 8px 20px;
+                transition: 0.3s;
+            }
+
+                .admin-header .user-dropdown .dropdown-item:hover {
+                    background-color: #f1f5f9;
+                    color: var(--primary);
+                }
+
+            .admin-header .user-dropdown .dropdown-divider {
+                margin: 5px 0;
+            }
+
+            .admin-header .user-avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                margin-right: 8px;
+                object-fit: cover;
+                border: 2px solid var(--primary);
+            }
+
+        /* Admin Cards */
+        .admin-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+            .admin-card .card-header {
+                background-color: white;
+                border-bottom: 1px solid #edf2f9;
+                padding: 15px 20px;
+            }
+
+                .admin-card .card-header h5 {
+                    margin: 0;
+                    font-weight: 600;
+                    color: var(--secondary);
+                }
+
+            .admin-card .card-body {
+                padding: 20px;
+            }
+
+        /* Breadcrumb */
+        .admin-breadcrumb {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+            .admin-breadcrumb .breadcrumb {
+                margin: 0;
+                padding: 0;
+                background: none;
+            }
+
+        /* Responsive */
+        @@media (max-width: 991px) {
+            .admin-sidebar
+
+        {
+            transform: translateX(-100%);
+            width: 250px;
+        }
+
+        .admin-sidebar.show {
+            transform: translateX(0);
+        }
+
+        .admin-content {
+            margin-left: 0;
+        }
+
+        .admin-content-expanded {
+            margin-left: 0;
+        }
+
+        .admin-header .logo {
+            margin-left: 0;
+        }
+
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+            footer.footer-expanded {
+                margin-left: 70px;
+            }
+
+        @@media (max-width: 991px) {
+            footer
+
+        {
+            margin-left: 0;
+        }
+
+        footer.footer-expanded {
+            margin-left: 0;
+        }
+
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <button id="sidebarToggle" class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <a href="/" class="logo">Hope<span>Clinic</span> Admin</a>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    <div class="dropdown user-dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if (!string.IsNullOrEmpty(User.FindFirst("ImageUrl")?.Value))
+                            {
+                                <img src="~/images/users/@User.FindFirst("ImageUrl").Value" alt="User" class="user-avatar">
+                            }
+                            else
+                            {
+                                <img src="~/images/default-user.png" alt="User" class="user-avatar">
+                            }
+                            <span class="d-none d-md-inline-block ml-1">@User.Identity.Name</span>
+                            <i class="fas fa-chevron-down ml-2" style="font-size: 12px;"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" asp-controller="Account" asp-action="EditProfile">
+                                <i class="fas fa-user-circle mr-2"></i> My Profile
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-wrapper">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Dashboard</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a asp-controller="AdminHome" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-header">DOCTOR MANAGEMENT</li>
+                <li>
+                    <a asp-controller="Doctor" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Doctor" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">
+                        <i class="fas fa-user-md"></i>
+                        <span class="menu-text">All Doctors</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Doctor" asp-action="Create" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Doctor" && ViewContext.RouteData.Values["action"]?.ToString() == "Create" ? "active" : "")">
+                        <i class="fas fa-plus-circle"></i>
+                        <span class="menu-text">Add Doctor</span>
+                    </a>
+                </li>
+                <li class="sidebar-header">PATIENT MANAGEMENT</li>
+                <li>
+                    <a asp-controller="Patient" asp-action="Index" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Patient" && ViewContext.RouteData.Values["action"]?.ToString()=="Index"? "active" : "")">
+                        <i class="fas fa-users"></i>
+                        <span class="menu-text">All Patients</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Patient" asp-action="Appointments" class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Patient" && ViewContext.RouteData.Values["action"]?.ToString() == "Appointments" ? "active" : "")">
+                        <i class="fas fa-calendar-check"></i>
+                        <span class="menu-text">Appointments</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Admin Content -->
+        <div class="admin-content">
+            @if (ViewBag.ShowBreadcrumb != false)
+            {
+                <nav aria-label="breadcrumb" class="admin-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                        @if (ViewContext.RouteData.Values["controller"]?.ToString() != "Admin" || ViewContext.RouteData.Values["action"]?.ToString() != "Index")
+                        {
+                            <li class="breadcrumb-item">
+                                <a asp-controller="@ViewContext.RouteData.Values["controller"]" asp-action="Index">
+                                    @ViewContext.RouteData.Values["controller"]
+                                </a>
+                            </li>
+                        }
+                        @if (ViewContext.RouteData.Values["action"]?.ToString() != "Index")
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">@ViewContext.RouteData.Values["action"]</li>
+                        }
+                    </ol>
+                </nav>
+            }
+
+            @RenderBody()
+        </div>
+    </div>
+
+    
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Sidebar Toggle
+            $('#sidebarToggle').on('click', function() {
+                $('.admin-sidebar').toggleClass('admin-sidebar-collapsed');
+                $('.admin-content').toggleClass('admin-content-expanded');
+                $('footer').toggleClass('footer-expanded');
+            });
+
+            // Mobile Sidebar Toggle
+            $('#sidebarToggle').on('click', function() {
+                if ($(window).width() < 992) {
+                    $('.admin-sidebar').toggleClass('show');
+                }
+            });
+
+            // Submenu Toggle
+            $('.submenu-toggle').on('click', function(e) {
+                e.preventDefault();
+                $(this).parent().toggleClass('open');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            $(document).on('click', function(e) {
+                if ($(window).width() < 992) {
+                    if (!$(e.target).closest('.admin-sidebar').length && !$(e.target).closest('#sidebarToggle').length) {
+                        $('.admin-sidebar').removeClass('show');
+                    }
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

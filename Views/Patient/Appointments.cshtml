@@ -1,0 +1,254 @@
+﻿@model IEnumerable<DentalClinicPrototype.Models.Appointment>
+
+@{
+    ViewData["Title"] = "All Appointments";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="admin-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>All Appointments</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="appointmentsTable">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date & Time</th>
+                                <th>reason for Appointment</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var appointment in Model)
+                            {
+                                <tr>
+                                    <td>@appointment.Id</td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@appointment.Patient.Id">
+                                            @appointment.Patient.User.FullName
+                                        </a>
+                                    </td>
+                                    <td>@appointment.DoctorSchedule.Doctor.User.FullName</td>
+                                    <td>@appointment.DoctorSchedule.ScheduleDateTime.ToString("MM/dd/yyyy hh:mm tt")</td>
+                                    <td>@appointment.Message</td>
+                                    <td>
+                                        @if (appointment.DoctorSchedule.ScheduleStatus.ToString() == "Available")
+                                        {
+                                            <span class="badge badge-success">Available</span>
+                                        }
+                                        else if (appointment.DoctorSchedule.ScheduleStatus.ToString() == "Booked")
+                                        {
+                                            <span class="badge badge-warning">Booked</span>
+                                        }
+                                        else if (appointment.DoctorSchedule.ScheduleStatus.ToString() == "Cancelled")
+                                        {
+                                            <span class="badge badge-danger">Cancelled</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New Appointment Modal -->
+<div class="modal fade" id="newAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="newAppointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: var(--primary); color: white;">
+                <h5 class="modal-title" id="newAppointmentModalLabel">Schedule New Appointment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="newAppointmentForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="PatientId">Patient</label>
+                        <select class="form-control" id="PatientId" name="PatientID" required>
+                            <option value="">Select Patient</option>
+                            <!-- Patients would be populated here -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="DoctorId">Doctor</label>
+                        <select class="form-control" id="DoctorId" name="DoctorId" required>
+                            <option value="">Select Doctor</option>
+                            <!-- Doctors would be populated here -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="AppointmentDateTime">Date & Time</label>
+                        <input type="datetime-local" class="form-control" id="AppointmentDateTime" name="ScheduleDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Message">Reason for Visit</label>
+                        <textarea class="form-control" id="Message" name="Message" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn" style="background-color: var(--primary); color: white;">Schedule Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- View Appointment Modal -->
+<div class="modal fade" id="viewAppointmentModal" tabindex="-1" role="dialog" aria-labelledby="viewAppointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: var(--primary); color: white;">
+                <h5 class="modal-title" id="viewAppointmentModalLabel">Appointment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="appointmentDetails">
+                    <!-- Appointment details will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Initialize DataTable if available
+            if ($.fn.DataTable) {
+                $('#appointmentsTable').DataTable({
+                    "responsive": true,
+                    "autoWidth": false,
+                    "order": [[3, "asc"]]
+                });
+            }
+
+            // Toggle filter section
+            $('#toggleFilters').click(function() {
+                $('#filterSection').slideToggle();
+            });
+
+            // Handle custom date range
+            $('#dateRange').change(function() {
+                if ($(this).val() === 'custom') {
+                    $('.custom-date-range').show();
+                } else {
+                    $('.custom-date-range').hide();
+                }
+            });
+
+            // Reset filters
+            $('#resetFilters').click(function() {
+                $('#appointmentFilterForm')[0].reset();
+                $('.custom-date-range').hide();
+            });
+
+            // Load doctors for the appointment form
+            $.ajax({
+                url: '/Doctor/GetDoctors',
+                type: 'GET',
+                success: function (data) {
+                    var options = '<option value="">Select Doctor</option>';
+                    $.each(data, function (i, doctor) {
+                        options += '<option value="' + doctor.id + '">' + doctor.name + '</option>';
+                    });
+                    $('#doctorId, #DoctorId').html(options);
+                }
+            });
+
+            // Load patients for the appointment form
+            $.ajax({
+                url: '/Patient/GetPatients',
+                type: 'GET',
+                success: function (data) {
+                    var options = '<option value="">Select Patient</option>';
+                    $.each(data, function (i, patient) {
+                        options += '<option value="' + patient.id + '">' + patient.name + '</option>';
+                    });
+                    $('#PatientId').html(options);
+                }
+            });
+
+            // Handle new appointment form submission
+            $('#newAppointmentForm').submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '/Appointment/Create',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            $('#newAppointmentModal').modal('hide');
+                            location.reload();
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while scheduling the appointment.');
+                    }
+                });
+            });
+
+            // View appointment details
+            $('.view-appointment').click(function () {
+                var appointmentId = $(this).data('id');
+
+                $.ajax({
+                    url: '/Appointment/GetDetails/' + appointmentId,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#appointmentDetails').html(data);
+                        $('#viewAppointmentModal').modal('show');
+                    },
+                    error: function () {
+                        alert('An error occurred while loading appointment details.');
+                    }
+                });
+            });
+
+            // Cancel appointment
+            $('.cancel-appointment').click(function () {
+                var appointmentId = $(this).data('id');
+
+                if (confirm('Are you sure you want to cancel this appointment?')) {
+                    $.ajax({
+                        url: '/Appointment/Cancel/' + appointmentId,
+                        type: 'POST',
+                        success: function (response) {
+                            if (response.success) {
+                                location.reload();
+                            } else {
+                                alert('Error: ' + response.message);
+                            }
+                        },
+                        error: function () {
+                            alert('An error occurred while cancelling the appointment.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

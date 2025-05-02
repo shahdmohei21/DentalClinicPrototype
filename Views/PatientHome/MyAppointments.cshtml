@@ -1,0 +1,184 @@
+﻿@model IEnumerable<DentalClinicPrototype.Models.Appointment>
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<!-- Breadcrumb -->
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My Appointments</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h2 style="color: var(--secondary);">My Appointments</h2>
+                <p class="text-muted">View and manage all your scheduled appointments</p>
+            </div>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="row">
+                <div class="col-12">
+                    <ul class="nav nav-tabs mb-4" id="appointmentTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="upcoming-tab" data-toggle="tab" href="#upcoming" role="tab">
+                                Upcoming Appointments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="past-tab" data-toggle="tab" href="#past" role="tab">
+                                Past Appointments
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" id="appointmentTabsContent">
+                        <div class="tab-pane fade show active" id="upcoming" role="tabpanel">
+                            <div class="row">
+                                @{
+                                    var upcomingAppointments = Model.Where(a => a.DoctorSchedule?.ScheduleDateTime > DateTime.Now);
+                                }
+
+                                @if (upcomingAppointments.Any())
+                                {
+                                    foreach (var appointment in upcomingAppointments)
+                                    {
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="card shadow-sm h-100">
+                                                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                                    <h5 class="mb-0">
+                                                        <i class="fas fa-calendar-check mr-2" style="color: var(--primary);"></i>
+                                                        @appointment.DoctorSchedule?.ScheduleDateTime.ToString("MMM dd, yyyy")
+                                                    </h5>
+                                                    <span class="badge badge-primary">Upcoming</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        @if (!string.IsNullOrEmpty(appointment.DoctorSchedule?.Doctor?.User?.ImageUrl))
+                                                        {
+                                                            <img src="~/images/users/@appointment.DoctorSchedule.Doctor.User.ImageUrl" alt="Doctor" class="rounded-circle mr-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/images/default-doctor.png" alt="Doctor" class="rounded-circle mr-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                        }
+                                                        <div>
+                                                            <h6 class="mb-1">Dr. @appointment.DoctorSchedule?.Doctor?.User?.FullName</h6>
+                                                            <p class="text-muted mb-0">@appointment.DoctorSchedule?.Doctor?.Specialization</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <p class="mb-1"><i class="far fa-clock mr-2" style="color: var(--primary);"></i> @appointment.DoctorSchedule?.ScheduleDateTime.ToString("hh:mm tt")</p>
+                                                    </div>
+
+                                                    @if (!string.IsNullOrEmpty(appointment.Message))
+                                                    {
+                                                        <div class="mb-3">
+                                                            <h6>Your Message:</h6>
+                                                            <p class="text-muted">@appointment.Message</p>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12">
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle mr-2"></i> You don't have any upcoming appointments.
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="past" role="tabpanel">
+                            <div class="row">
+                                @{
+                                    var pastAppointments = Model.Where(a => a.DoctorSchedule?.ScheduleDateTime <= DateTime.Now);
+                                }
+
+                                @if (pastAppointments.Any())
+                                {
+                                    foreach (var appointment in pastAppointments)
+                                    {
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="card shadow-sm h-100">
+                                                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                                    <h5 class="mb-0">
+                                                        <i class="fas fa-calendar mr-2" style="color: var(--secondary);"></i>
+                                                        @appointment.DoctorSchedule?.ScheduleDateTime.ToString("MMM dd, yyyy")
+                                                    </h5>
+                                                    <span class="badge badge-secondary">Completed</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        @if (!string.IsNullOrEmpty(appointment.DoctorSchedule?.Doctor?.User?.ImageUrl))
+                                                        {
+                                                            <img src="~/images/users/@appointment.DoctorSchedule.Doctor.User.ImageUrl" alt="Doctor" class="rounded-circle mr-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/images/default-doctor.png" alt="Doctor" class="rounded-circle mr-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                        }
+                                                        <div>
+                                                            <h6 class="mb-1">Dr. @appointment.DoctorSchedule?.Doctor?.User?.FullName</h6>
+                                                            <p class="text-muted mb-0">@appointment.DoctorSchedule?.Doctor?.Specialization</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <p class="mb-1"><i class="far fa-clock mr-2" style="color: var(--secondary);"></i> @appointment.DoctorSchedule?.ScheduleDateTime.ToString("hh:mm tt")</p>
+                                                    </div>
+
+                                                    <div class="mt-3">
+                                                        <a href="#" class="btn btn-outline-primary btn-sm">
+                                                            <i class="fas fa-star mr-1"></i> Leave a Review
+                                                        </a>
+                                                        <a href="#" class="btn btn-outline-secondary btn-sm ml-2">
+                                                            <i class="fas fa-redo mr-1"></i> Book Again
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-12">
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle mr-2"></i> You don't have any past appointments.
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-5">
+                <i class="far fa-calendar-alt fa-4x mb-3" style="color: var(--primary);"></i>
+                <h4 class="mb-3">No Appointments Found</h4>
+                <p class="text-muted mb-4">You haven't booked any appointments yet. Start by finding a doctor and booking your first appointment.</p>
+                <a asp-action="AllDoctors" class="btn btn-primary btn-lg">
+                    <i class="fas fa-search mr-1"></i> Find a Doctor
+                </a>
+            </div>
+        }
+    </div>
+</section>

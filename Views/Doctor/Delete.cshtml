@@ -1,0 +1,98 @@
+﻿@model DentalClinicPrototype.Models.Doctor
+
+@{
+    ViewData["Title"] = "Delete Doctor";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow mb-4 border-left-danger">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-danger">Confirm Deletion</h6>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Are you sure you want to delete this doctor? This action cannot be undone.
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                @if (!string.IsNullOrEmpty(Model.User.ImageUrl))
+                {
+                    <img src="~/images/doctors/@Model.User.ImageUrl" alt="@Model.User.FullName" class="img-fluid rounded-circle mb-3" style="max-width: 150px; height: 150px; object-fit: cover; border: 3px solid #e74a3b;">
+                }
+                else
+                {
+                    <img src="~/images/default-doctor.png" alt="Default" class="img-fluid rounded-circle mb-3" style="max-width: 150px; height: 150px; object-fit: cover; border: 3px solid #e74a3b;">
+                }
+                <h4>@Model.User.FullName</h4>
+                <p class="badge badge-info px-3 py-2">@Model.Specialization</p>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Doctor Information</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong><i class="fas fa-envelope mr-2 text-primary"></i>Email:</strong></p>
+                                <p class="text-muted">@Model.User.Email</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong><i class="fas fa-graduation-cap mr-2 text-primary"></i>Qualification:</strong></p>
+                                <p class="text-muted">@Model.Qualification</p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <p><strong><i class="fas fa-briefcase mr-2 text-primary"></i>Experience:</strong></p>
+                                <p class="text-muted">@Model.Experience years</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong><i class="fas fa-dollar-sign mr-2 text-primary"></i>Appointment Price:</strong></p>
+                                <p class="text-muted">$@Model.appointmentPrice</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.DoctorSchedules != null && Model.DoctorSchedules.Any())
+                {
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        <strong>Warning:</strong> This doctor has @Model.DoctorSchedules.Count() associated DoctorSchedule(s). Deleting this doctor will also remove all their DoctorSchedule.
+                    </div>
+                }
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger">
+                    />
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash mr-2"></i>Delete
+                        </button>
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-times mr-2"></i>Cancel
+                        </a>
+                    </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Add confirmation dialog
+            $('form').on('submit', function(e) {
+                if (!confirm('Are you absolutely sure you want to delete this doctor? This action cannot be undone.')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
